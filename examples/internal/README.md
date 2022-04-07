@@ -1,4 +1,4 @@
-# 网管示例
+# 网关服务示例
 调用链路为 client -[http]-> gateway -[grpc]-> server
 ## 编译
 ```shell
