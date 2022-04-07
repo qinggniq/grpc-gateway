@@ -1,40 +1,22 @@
-# One way to run the example
-
-```bash
-# Handle dependencies
-$ dep init
+# 网管示例
+调用链路为 client -[http]-> gateway -[grpc]-> server
+## 编译
+```shell
+$ go build -o bin/example-server github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/cmd/example-grpc-server # 编译 server
+$ go build -o bin/example-gw github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/cmd/example-gateway-server # 编译 gateway
 ```
-
-Follow the guides from this [README.md](./browser/README.md) to run the server and gateway.
-```bash
-# Make sure you are in the correct directory: 
-# $GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/v2/examples
-$ cd examples/internal/browser
-$ pwd
-
-# Install gulp
-$ npm install -g gulp-cli
-$ npm install
-$ gulp
-
-# Run
-$ gulp bower
-$ gulp backends
+## 运行
+### 运行 server
+server默认监听9090端口。
+```shell
+$ ./bin/example-server --logtostderr 
 ```
-
-Then you can use curl or a browser to test:
-
-```bash
-# List all apis
-$ curl http://localhost:8080/openapiv2/echo_service.swagger.json
-
-# Visit the apis
-$ curl -XPOST http://localhost:8080/v1/example/echo/foo
-{"id":"foo"}
-
-$ curl  http://localhost:8080/v1/example/echo/foo/123
-{"id":"foo","num":"123"}
-
+### 运行 gateway 
+gateway默认监听8080端口
+```shell
+$ ./bin/example-gw --logtostderr --openapi_dir ../proto/examplepb
 ```
-
-So you have visited the apis by HTTP successfully. You can also try other apis.
+## 验证
+```shell
+$ curl http://localhost:8080/v1/example/echo/foo/123
+```
